@@ -6968,7 +6968,7 @@
       (clearance 0.65024))
   )
 
-  (module kicad-libraries:PMS7003 (layer F.Cu) (tedit 5A54E976) (tstamp 5A569C28)
+  (module kicad-libraries:PMS7003 (layer F.Cu) (tedit 5A54EB04) (tstamp 5A569C28)
     (at 130.3 85.1)
     (path /5A559246)
     (fp_text reference U6 (at 0 0.5) (layer F.Fab)
