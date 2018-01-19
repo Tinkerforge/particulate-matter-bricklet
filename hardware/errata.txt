@@ -1,0 +1,4 @@
+move U6 to the edge
+move R2
+more space to C10, C11
+fix ground routing of u6-c10,c11
