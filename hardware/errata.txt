@@ -1,5 +1,6 @@
-move U6 to the edge
+move U6 to the edge			done
 move R2					done
-more space to C10, C11
-fix ground routing of u6-c10,c11
+more space to C10, C11			done
+fix ground routing of u6-c10,c11	done
 RP1 --> 4X0402 footprint		done
+move debug pad				done

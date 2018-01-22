@@ -36,7 +36,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "Particulate Matter Bricklet"
-Date "2018-01-09"
+Date "2018-01-22"
 Rev "1.0"
 Comp "Tinkerforge GmbH"
 Comment1 "Licensed under CERN OHL v.1.1"
@@ -451,7 +451,6 @@ NoConn ~ 5800 5750
 NoConn ~ 5800 5650
 NoConn ~ 5800 5550
 NoConn ~ 5800 4950
-NoConn ~ 5800 4850
 NoConn ~ 4000 3800
 NoConn ~ 4000 3900
 NoConn ~ 4000 4000
@@ -821,20 +820,14 @@ Wire Wire Line
 $Comp
 L CONN_01X01 P3
 U 1 1 5A5511B7
-P 3550 6950
-F 0 "P3" H 3550 7050 50  0000 C CNN
-F 1 "DEBUG" V 3650 6950 50  0000 C CNN
-F 2 "kicad-libraries:DEBUG_PAD" H 3550 6950 50  0001 C CNN
-F 3 "" H 3550 6950 50  0000 C CNN
-	1    3550 6950
+P 5550 4850
+F 0 "P3" H 5550 4950 50  0000 C CNN
+F 1 "DEBUG" V 5650 4850 50  0000 C CNN
+F 2 "kicad-libraries:DEBUG_PAD" H 5550 4850 50  0001 C CNN
+F 3 "" H 5550 4850 50  0000 C CNN
+	1    5550 4850
 	-1   0    0    1   
 $EndComp
-Wire Wire Line
-	4050 6650 4000 6650
-Wire Wire Line
-	4000 6650 4000 6950
-Wire Wire Line
-	4000 6950 3750 6950
 $Comp
 L R_PACK4 RP2
 U 1 1 5A54B09B
@@ -871,4 +864,7 @@ Connection ~ 9350 3400
 Wire Wire Line
 	9900 3400 9950 3400
 Connection ~ 9950 3650
+NoConn ~ 4050 6650
+Wire Wire Line
+	5750 4850 5800 4850
 $EndSCHEMATC
