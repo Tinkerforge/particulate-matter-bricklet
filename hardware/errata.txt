@@ -1,4 +1,5 @@
 move U6 to the edge
-move R2
+move R2					done
 more space to C10, C11
 fix ground routing of u6-c10,c11
+RP1 --> 4X0402 footprint		done
