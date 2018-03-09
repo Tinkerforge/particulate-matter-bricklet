@@ -29,7 +29,6 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:particulate-matter-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -742,9 +741,9 @@ NoConn ~ 9650 4300
 NoConn ~ 9650 4400
 Text GLabel 8650 4200 0    47   Input ~ 0
 PMS_SET
-Text GLabel 7450 4400 0    47   Input ~ 0
+Text GLabel 7450 4300 0    47   Input ~ 0
 PMS_RX
-Text GLabel 7450 4300 0    47   Output ~ 0
+Text GLabel 7450 4400 0    47   Output ~ 0
 PMS_TX
 Text GLabel 8650 4500 0    47   Input ~ 0
 PMS_RESET
@@ -837,7 +836,7 @@ F 1 "100" H 7850 4500 50  0000 C CNN
 F 2 "4X0402" H 7850 4550 50  0001 C CNN
 F 3 "" H 7850 4550 50  0000 C CNN
 	1    7850 4550
-	-1   0    0    -1  
+	1    0    0    -1  
 $EndComp
 Wire Wire Line
 	7650 4400 7450 4400
