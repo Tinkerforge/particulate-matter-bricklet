@@ -27,7 +27,7 @@
 #define STARTUP_SYSTEM_INIT_ALREADY_DONE
 #define SYSTEM_TIMER_FREQUENCY 1000 // Use 1 kHz system timer
 
-#define UARTBB_TX_PIN P1_4
+#define UARTBB_TX_PIN P4_7 // TODO: Debug Pad is 1_4 in release version!
 
 #define FIRMWARE_VERSION_MAJOR 2
 #define FIRMWARE_VERSION_MINOR 0

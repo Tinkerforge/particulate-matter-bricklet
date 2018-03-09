@@ -28,15 +28,18 @@
 #include "bricklib2/hal/system_timer/system_timer.h"
 #include "bricklib2/logging/logging.h"
 #include "communication.h"
+#include "pms7003.h"
 
 int main(void) {
 	logging_init();
 	logd("Start Particulate Matter Bricklet\n\r");
 
 	communication_init();
+	pms7003_init();
 
 	while(true) {
 		bootloader_tick();
 		communication_tick();
+		pms7003_tick();
 	}
 }
