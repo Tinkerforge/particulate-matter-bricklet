@@ -31,12 +31,12 @@
 #define PMS7003_USIC_CHANNEL        USIC1_CH1
 #define PMS7003_USIC                XMC_UART1_CH1
 
-#define PMS7003_RX_PIN              P2_12
+#define PMS7003_RX_PIN              P2_13
 #define PMS7003_RX_INPUT            XMC_USIC_CH_INPUT_DX0
-#define PMS7003_RX_SOURCE           0b010 // DX0C
+#define PMS7003_RX_SOURCE           0b011 // DX0D
 
-#define PMS7003_TX_PIN              P2_13
-#define PMS7003_TX_PIN_AF           (XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7 | P2_13_AF_U1C1_DOUT0)
+#define PMS7003_TX_PIN              P2_12
+#define PMS7003_TX_PIN_AF           (XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT7 | P2_12_AF_U1C1_DOUT0)
 
 #define PMS7003_SERVICE_REQUEST_RX  2  // receive
 #define PMS7003_SERVICE_REQUEST_TX  3  // transfer
