@@ -3,7 +3,7 @@
   (general
     (links 66)
     (no_connects 0)
-    (area 100.609499 64.809499 170.990501 105.190501)
+    (area 14.621426 64.145139 171.654861 193.825)
     (thickness 1.6)
     (drawings 12)
     (tracks 254)
@@ -46,7 +46,7 @@
   )
 
   (setup
-    (last_trace_width 0.4)
+    (last_trace_width 0.25)
     (user_trace_width 0.2)
     (user_trace_width 0.25)
     (user_trace_width 0.3)
@@ -6359,7 +6359,7 @@
   )
 
   (module kicad-libraries:Logo_CoMCU (layer B.Cu) (tedit 0) (tstamp 5A5E438C)
-    (at 146 85 180)
+    (at 145.8 85 180)
     (fp_text reference G*** (at 0 0 180) (layer B.SilkS) hide
       (effects (font (thickness 0.3)) (justify mirror))
     )
@@ -6569,7 +6569,7 @@
   )
 
   (module kicad-libraries:CE_5mm (layer B.Cu) (tedit 5922FFD4) (tstamp 5A601E19)
-    (at 135.8 85 180)
+    (at 125.8 85 180)
     (fp_text reference VAL (at 0 0 180) (layer B.SilkS) hide
       (effects (font (size 0.2 0.2) (thickness 0.05)) (justify mirror))
     )
@@ -6663,7 +6663,7 @@
   )
 
   (module kicad-libraries:WEEE_7mm (layer B.Cu) (tedit 5922FFAE) (tstamp 5A61F774)
-    (at 125.6 85 180)
+    (at 135.8 85 180)
     (fp_text reference VAL (at 0 0 180) (layer B.SilkS) hide
       (effects (font (size 0.2 0.2) (thickness 0.05)) (justify mirror))
     )
