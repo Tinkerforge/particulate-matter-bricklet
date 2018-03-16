@@ -51,7 +51,6 @@ uint16_t *const pms7003_ringbuffer_rx_start  = &(pms7003.ringbuffer_rx.start);
 uint16_t *const pms7003_ringbuffer_rx_size   = &(pms7003.ringbuffer_rx.size);
 
 void __attribute__((optimize("-O3"))) __attribute__ ((section (".ram_code"))) pms7003_rx_irq_handler(void) {
-	XMC_GPIO_ToggleOutput(P1_0);
 	while(!XMC_USIC_CH_RXFIFO_IsEmpty(PMS7003_USIC)) {
 		// Instead of ringbuffer_add() we add the byte to the buffer
 		// by hand.
@@ -170,7 +169,6 @@ void pms7003_handle_data(uint8_t data) {
 
 	if(data_counter == 32) {
 		if(checksum == pms7003.frame.checksum) {
-			pms7003_print_frame();
 			// can only be valid if sensor is active
 			/*modbus_input.pms_valid = modbus_coils.pms_active;
 			modbus_input.pms_concentration_pm10 = pms7003_frame.conc_pm1_0_amb;
@@ -184,12 +182,12 @@ void pms7003_handle_data(uint8_t data) {
 			modbus_input.pms_particles_100um = pms7003_frame.raw_gt10_0um;
 
 			pms7003_last_valid_time = system_timer_get_ms();*/
+			//pms7003_print_frame();
 		} else {
 			logw("Unexpected: checksum %d != %d\n\r", checksum, pms7003.frame.checksum);
 			pms7003.checksum_error_counter++;
 		}
 
-		//pms7003_print_frame();
 		data_counter = 0;
 		checksum = 0;
 	}
