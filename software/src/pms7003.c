@@ -1,5 +1,6 @@
 /* particulate-matter-bricklet
  * Copyright (C) 2018 Olaf Lüke <olaf@tinkerforge.com>
+ * Copyright (C) 2018 Matthias Bolte <matthias@tinkerforge.com>
  *
  * pms7003.c: Driver for PMS7003 sensor
  *
@@ -29,14 +30,6 @@
 
 #include "xmc_uart.h"
 #include "xmc_scu.h"
-
-// TODO:
-//  * Create API
-//  * Implement API
-//  * API doc: 30 seconds after startup values ok
-//  * Add support for on/off
-//  * API: get_particles (gt03um, gt05um, gt10um, gt25um, gt50um, gt100um)
-//  * API: get_concentration (pm10, pm25, pm100)
 
 #define pms7003_rx_irq_handler  IRQ_Hdlr_11
 #define pms7003_tx_irq_handler  IRQ_Hdlr_12
@@ -71,7 +64,6 @@ void __attribute__((optimize("-O3"))) __attribute__ ((section (".ram_code"))) pm
 			*pms7003_ringbuffer_rx_end = new_end;
 		}
 	}
-
 }
 
 void __attribute__((optimize("-O3"))) __attribute__ ((section (".ram_code"))) pms7003_tx_irq_handler(void) {
@@ -91,21 +83,21 @@ void __attribute__((optimize("-O3"))) __attribute__ ((section (".ram_code"))) pm
 
 void pms7003_print_frame(void) {
 	uartbb_printf("Frame (err ch %u, err fr %u):\n\r", pms7003.checksum_error_counter, pms7003.framing_error_counter);
-	uartbb_printf("* conc_pm1_0_cf1: %d\n\r", pms7003.frame.conc_pm1_0_cf1);
-	uartbb_printf("* conc_pm2_5_cf1: %d\n\r", pms7003.frame.conc_pm2_5_cf1);
-	uartbb_printf("* conc_pm10_0_cf1: %d\n\r", pms7003.frame.conc_pm10_0_cf1);
-	uartbb_printf("* conc_pm1_0_amb: %d\n\r", pms7003.frame.conc_pm1_0_amb);
-	uartbb_printf("* conc_pm2_5_amb: %d\n\r", pms7003.frame.conc_pm2_5_amb);
-	uartbb_printf("* conc_pm10_0_amb: %d\n\r", pms7003.frame.conc_pm10_0_amb);
-	uartbb_printf("* raw_gt0_3um: %d\n\r", pms7003.frame.raw_gt0_3um);
-	uartbb_printf("* raw_gt0_5um: %d\n\r", pms7003.frame.raw_gt0_5um);
-	uartbb_printf("* raw_gt1_0um: %d\n\r", pms7003.frame.raw_gt1_0um);
-	uartbb_printf("* raw_gt2_5um: %d\n\r", pms7003.frame.raw_gt2_5um);
-	uartbb_printf("* raw_gt5_0um: %d\n\r", pms7003.frame.raw_gt5_0um);
-	uartbb_printf("* raw_gt10_0um: %d\n\r", pms7003.frame.raw_gt10_0um);
-	uartbb_printf("* version: %d\n\r", pms7003.frame.version);
-	uartbb_printf("* error_code: %d\n\r", pms7003.frame.error_code);
-	uartbb_printf("* checksum: %d\n\r", pms7003.frame.checksum);
+	uartbb_printf("* conc_pm1_0_cf1: %d\n\r", pms7003.frame_good.conc_pm1_0_cf1);
+	uartbb_printf("* conc_pm2_5_cf1: %d\n\r", pms7003.frame_good.conc_pm2_5_cf1);
+	uartbb_printf("* conc_pm10_0_cf1: %d\n\r", pms7003.frame_good.conc_pm10_0_cf1);
+	uartbb_printf("* conc_pm1_0_amb: %d\n\r", pms7003.frame_good.conc_pm1_0_amb);
+	uartbb_printf("* conc_pm2_5_amb: %d\n\r", pms7003.frame_good.conc_pm2_5_amb);
+	uartbb_printf("* conc_pm10_0_amb: %d\n\r", pms7003.frame_good.conc_pm10_0_amb);
+	uartbb_printf("* raw_gt0_3um: %d\n\r", pms7003.frame_good.raw_gt0_3um);
+	uartbb_printf("* raw_gt0_5um: %d\n\r", pms7003.frame_good.raw_gt0_5um);
+	uartbb_printf("* raw_gt1_0um: %d\n\r", pms7003.frame_good.raw_gt1_0um);
+	uartbb_printf("* raw_gt2_5um: %d\n\r", pms7003.frame_good.raw_gt2_5um);
+	uartbb_printf("* raw_gt5_0um: %d\n\r", pms7003.frame_good.raw_gt5_0um);
+	uartbb_printf("* raw_gt10_0um: %d\n\r", pms7003.frame_good.raw_gt10_0um);
+	uartbb_printf("* version: %d\n\r", pms7003.frame_good.version);
+	uartbb_printf("* error_code: %d\n\r", pms7003.frame_good.error_code);
+	uartbb_printf("* checksum: %d\n\r", pms7003.frame_good.checksum);
 	uartbb_printf("\n\r");
 }
 
@@ -113,7 +105,7 @@ void pms7003_handle_data(uint8_t data) {
 	static uint16_t checksum = 0;
 	static uint32_t data_counter = 0;
 
-	uint8_t *frame_buffer = (uint8_t*)&pms7003.frame;
+	uint8_t *frame_buffer = (uint8_t*)&pms7003.frame_pending;
 	if(data_counter == 0) {                   // sync first byte (0x42)
 		if(data == 0x42) {
 			data_counter++;
@@ -168,23 +160,11 @@ void pms7003_handle_data(uint8_t data) {
 	}
 
 	if(data_counter == 32) {
-		if(checksum == pms7003.frame.checksum) {
-			// can only be valid if sensor is active
-			/*modbus_input.pms_valid = modbus_coils.pms_active;
-			modbus_input.pms_concentration_pm10 = pms7003_frame.conc_pm1_0_amb;
-			modbus_input.pms_concentration_pm25 = pms7003_frame.conc_pm2_5_amb;
-			modbus_input.pms_concentration_pm100 = pms7003_frame.conc_pm10_0_amb;
-			modbus_input.pms_particles_03um = pms7003_frame.raw_gt0_3um;
-			modbus_input.pms_particles_05um = pms7003_frame.raw_gt0_5um;
-			modbus_input.pms_particles_10um = pms7003_frame.raw_gt1_0um;
-			modbus_input.pms_particles_25um = pms7003_frame.raw_gt2_5um;
-			modbus_input.pms_particles_50um = pms7003_frame.raw_gt5_0um;
-			modbus_input.pms_particles_100um = pms7003_frame.raw_gt10_0um;
-
-			pms7003_last_valid_time = system_timer_get_ms();*/
+		if(checksum == pms7003.frame_pending.checksum) {
+			memcpy(&pms7003.frame_good, &pms7003.frame_pending, sizeof(PMS7003Frame));
 			//pms7003_print_frame();
 		} else {
-			logw("Unexpected: checksum %d != %d\n\r", checksum, pms7003.frame.checksum);
+			logw("Unexpected: checksum %d != %d\n\r", checksum, pms7003.frame_pending.checksum);
 			pms7003.checksum_error_counter++;
 		}
 
@@ -273,6 +253,10 @@ void pms7003_init_buffer(void) {
 }
 
 void pms7003_init(void) {
+	memset(&pms7003, 0, sizeof(PMS7003));
+
+	pms7003.enable = true;
+
 	XMC_GPIO_CONFIG_t pin_config = {
 		.mode             = XMC_GPIO_MODE_OUTPUT_PUSH_PULL,
 		.output_level     = XMC_GPIO_OUTPUT_LEVEL_HIGH
@@ -286,6 +270,12 @@ void pms7003_init(void) {
 }
 
 void pms7003_tick(void) {
+	if (pms7003.enable) {
+		XMC_GPIO_SetOutputHigh(PMS7003_SET_PIN);
+	} else {
+		XMC_GPIO_SetOutputLow(PMS7003_SET_PIN);
+	}
+
 	while(ringbuffer_get_used(&pms7003.ringbuffer_rx) > 0) {
 		uint8_t data = 0;
 		ringbuffer_get(&pms7003.ringbuffer_rx, &data);

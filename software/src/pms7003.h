@@ -1,5 +1,6 @@
 /* particulate-matter-bricklet
  * Copyright (C) 2018 Olaf Lüke <olaf@tinkerforge.com>
+ * Copyright (C) 2018 Matthias Bolte <matthias@tinkerforge.com>
  *
  * pms7003.h: Driver for PMS7003 sensor
  *
@@ -29,21 +30,21 @@
 #define PMS7003_BUFFER_SIZE 2048
 
 typedef struct {
-    uint16_t conc_pm1_0_cf1;
-    uint16_t conc_pm2_5_cf1;
-    uint16_t conc_pm10_0_cf1;
-    uint16_t conc_pm1_0_amb;
-    uint16_t conc_pm2_5_amb;
-    uint16_t conc_pm10_0_amb;
-    uint16_t raw_gt0_3um;
-    uint16_t raw_gt0_5um;
-    uint16_t raw_gt1_0um;
-    uint16_t raw_gt2_5um;
-    uint16_t raw_gt5_0um;
-    uint16_t raw_gt10_0um;
-    uint8_t  version;
-    uint8_t  error_code;
-    uint16_t checksum;
+	uint16_t conc_pm1_0_cf1;
+	uint16_t conc_pm2_5_cf1;
+	uint16_t conc_pm10_0_cf1;
+	uint16_t conc_pm1_0_amb;
+	uint16_t conc_pm2_5_amb;
+	uint16_t conc_pm10_0_amb;
+	uint16_t raw_gt0_3um;
+	uint16_t raw_gt0_5um;
+	uint16_t raw_gt1_0um;
+	uint16_t raw_gt2_5um;
+	uint16_t raw_gt5_0um;
+	uint16_t raw_gt10_0um;
+	uint8_t  version;
+	uint8_t  error_code;
+	uint16_t checksum;
 } __attribute__((__packed__)) PMS7003Frame;
 
 typedef struct {
@@ -52,9 +53,12 @@ typedef struct {
 	Ringbuffer ringbuffer_tx;
 	Ringbuffer ringbuffer_rx;
 
-	PMS7003Frame frame;
+	PMS7003Frame frame_pending;
+	PMS7003Frame frame_good;
 	uint32_t framing_error_counter;
 	uint32_t checksum_error_counter;
+
+	bool enable;
 } PMS7003;
 
 extern PMS7003 pms7003;
