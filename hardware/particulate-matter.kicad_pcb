@@ -1,9 +1,9 @@
-(kicad_pcb (version 4) (host pcbnew 4.0.7-e2-6376~58~ubuntu17.04.1)
+(kicad_pcb (version 4) (host pcbnew 4.0.2+dfsg1-stable)
 
   (general
     (links 66)
     (no_connects 0)
-    (area 14.621426 64.145139 171.654861 193.825)
+    (area 100.609499 64.809499 170.990501 105.190501)
     (thickness 1.6)
     (drawings 12)
     (tracks 254)
@@ -6979,6 +6979,11 @@
       (net 1 GND))
     (pad 2 thru_hole circle (at 17.12 -13.04) (size 1 1) (drill 0.6) (layers *.Cu *.Mask F.SilkS)
       (net 6 +5V))
+    (model Sensors_Detectors/PMS7003.wrl
+      (at (xyz -0.01 -0.06 0.465))
+      (scale (xyz 1 1 1))
+      (rotate (xyz 90 0 0))
+    )
   )
 
   (gr_text "Particulate Matter\n1.0" (at 159.6 103.1) (layer F.SilkS)
