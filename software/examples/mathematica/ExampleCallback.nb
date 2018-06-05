@@ -1,0 +1,41 @@
+Notebook[{
+ Cell[
+  BoxData[{
+   RowBox[{"Needs", "[", "\"\<NETLink`\>\"", "]"}],
+   RowBox[{"LoadNETAssembly", "[", RowBox[{"\"\<Tinkerforge\>\"", ",", RowBox[{RowBox[{"NotebookDirectory", "[", "]"}], "<>", "\"\<../../..\>\""}]}], "]"}]
+  }], "Input"
+ ],
+ Cell[
+  BoxData[{
+   RowBox[{"host", "=", "\"\<localhost\>\""}],
+   RowBox[{"port", "=", "4223"}],
+   RowBox[{"uid", "=", "\"\<XYZ\>\"", RowBox[{"(*", "Change XYZ to the UID of your Particulate Matter Bricklet", "*)"}]}],
+   RowBox[{"
+"}],
+   RowBox[{"(*", "Create IPConnection and device object", "*)"}],
+   RowBox[{"ipcon", "=", RowBox[{"NETNew", "[", "\"\<Tinkerforge.IPConnection\>\"", "]"}]}],
+   RowBox[{"pm", "=", RowBox[{"NETNew", "[", RowBox[{"\"\<Tinkerforge.BrickletParticulateMatter\>\"", ",", "uid", ",", "ipcon"}], "]"}]}],
+   RowBox[{"ipcon", "@", RowBox[{"Connect", "[", RowBox[{"host", ",", "port"}], "]"}]}],
+   RowBox[{"
+"}],
+   RowBox[{"(*", "Callback function for PM concentration callback", "*)"}],
+   RowBox[{RowBox[{"PMConcentrationCB", "[", RowBox[{"sender_", ",", "pm10_", ",", "pm25_", ",", "pm100_"}], "]"}], ":=", "\[IndentingNewLine]", RowBox[{"Module", "[", RowBox[{RowBox[{"{", "}"}], ",", RowBox[{"\[IndentingNewLine]", RowBox[{"Print", "[", RowBox[{"\"\<PM 1.0: \>\"", "<>", RowBox[{"ToString", "[", RowBox[{"N", "[", RowBox[{"Quantity", "[", RowBox[{"pm10", ",", "\"\<\.b5g/m\.b3\>\""}], "]"}], "]"}], "]"}]}], "]"}], ";", "\[IndentingNewLine]", RowBox[{"Print", "[", RowBox[{"\"\<PM 2.5: \>\"", "<>", RowBox[{"ToString", "[", RowBox[{"N", "[", RowBox[{"Quantity", "[", RowBox[{"pm25", ",", "\"\<\.b5g/m\.b3\>\""}], "]"}], "]"}], "]"}]}], "]"}], ";", "\[IndentingNewLine]", RowBox[{"Print", "[", RowBox[{"\"\<PM 10.0: \>\"", "<>", RowBox[{"ToString", "[", RowBox[{"N", "[", RowBox[{"Quantity", "[", RowBox[{"pm100", ",", "\"\<\.b5g/m\.b3\>\""}], "]"}], "]"}], "]"}]}], "]"}], "\[IndentingNewLine]"}]}], "]"}]}],
+   RowBox[{"
+"}],
+   RowBox[{"AddEventHandler", "[", RowBox[{RowBox[{"pm", "@", "PMConcentrationCallback"}], ",", "PMConcentrationCB"}], "]"}],
+   RowBox[{"
+"}],
+   RowBox[{"(*", "Set period for PM concentration callback to 1s (1000ms)", "*)"}],
+   RowBox[{"pm", "@", RowBox[{"SetPMConcentrationCallbackConfiguration", "[", RowBox[{"1000", ",", "False"}], "]"}]}],
+   RowBox[{"
+"}],
+   RowBox[{"Input", "[", "\"\<Click OK to exit\>\"", "]"}],
+   RowBox[{"
+"}],
+   RowBox[{"(*", "Clean up", "*)"}],
+   RowBox[{"ipcon", "@", RowBox[{"Disconnect", "[", "]"}]}],
+   RowBox[{"ReleaseNETObject", "[", "pm", "]"}],
+   RowBox[{"ReleaseNETObject", "[", "ipcon", "]"}]
+  }], "Input"
+ ]
+}]

@@ -1,0 +1,31 @@
+Needs["NETLink`"]
+LoadNETAssembly["Tinkerforge",NotebookDirectory[]<>"../../.."]
+
+host="localhost"
+port=4223
+uid="XYZ"(*Change XYZ to the UID of your Particulate Matter Bricklet*)
+
+(*Create IPConnection and device object*)
+ipcon=NETNew["Tinkerforge.IPConnection"]
+pm=NETNew["Tinkerforge.BrickletParticulateMatter",uid,ipcon]
+ipcon@Connect[host,port]
+
+(*Callback function for PM concentration callback*)
+PMConcentrationCB[sender_,pm10_,pm25_,pm100_]:=
+ Module[{},
+  Print["PM 1.0: "<>ToString[N[Quantity[pm10,"µg/m³"]]]];
+  Print["PM 2.5: "<>ToString[N[Quantity[pm25,"µg/m³"]]]];
+  Print["PM 10.0: "<>ToString[N[Quantity[pm100,"µg/m³"]]]]
+ ]
+
+AddEventHandler[pm@PMConcentrationCallback,PMConcentrationCB]
+
+(*Set period for PM concentration callback to 1s (1000ms)*)
+pm@SetPMConcentrationCallbackConfiguration[1000,False]
+
+Input["Click OK to exit"]
+
+(*Clean up*)
+ipcon@Disconnect[]
+ReleaseNETObject[pm]
+ReleaseNETObject[ipcon]
