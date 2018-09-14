@@ -26,7 +26,7 @@ Module ExampleCallback
         ' Register PM concentration callback to subroutine PMConcentrationCB
         AddHandler pm.PMConcentrationCallback, AddressOf PMConcentrationCB
 
-        ' Set period for pm_concentration callback to 1s (1000ms)
+        ' Set period for PM concentration callback to 1s (1000ms)
         pm.SetPMConcentrationCallbackConfiguration(1000, False)
 
         Console.WriteLine("Press key to exit")
