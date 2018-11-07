@@ -12,10 +12,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     ipcon.connect((HOST, PORT)).recv()??; // Connect to brickd.
                                           // Don't use device before ipcon is connected.
 
-    // Create receiver for PM concentration events.
-    let pm_concentration_receiver = pm.get_pm_concentration_receiver();
+    let pm_concentration_receiver = pm.get_pm_concentration_callback_receiver();
 
-    // Spawn thread to handle received events. This thread ends when the `pm` object
+    // Spawn thread to handle received callback messages.
+    // This thread ends when the `pm` object
     // is dropped, so there is no need for manual cleanup.
     thread::spawn(move || {
         for pm_concentration in pm_concentration_receiver {
