@@ -1,24 +1,24 @@
 use std::{error::Error, io};
 
-use tinkerforge::{ipconnection::IpConnection, particulate_matter_bricklet::*};
+use tinkerforge::{ip_connection::IpConnection, particulate_matter_bricklet::*};
 
-const HOST: &str = "127.0.0.1";
+const HOST: &str = "localhost";
 const PORT: u16 = 4223;
-const UID: &str = "XYZ"; // Change XYZ to the UID of your Particulate Matter Bricklet
+const UID: &str = "XYZ"; // Change XYZ to the UID of your Particulate Matter Bricklet.
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let ipcon = IpConnection::new(); // Create IP connection
-    let particulate_matter_bricklet = ParticulateMatterBricklet::new(UID, &ipcon); // Create device object
+    let ipcon = IpConnection::new(); // Create IP connection.
+    let pm = ParticulateMatterBricklet::new(UID, &ipcon); // Create device object.
 
-    ipcon.connect(HOST, PORT).recv()??; // Connect to brickd
-                                        // Don't use device before ipcon is connected
+    ipcon.connect((HOST, PORT)).recv()??; // Connect to brickd.
+                                          // Don't use device before ipcon is connected.
 
-    // Get current PM concentration
-    let get_pm_concentration_result = particulate_matter_bricklet.get_pm_concentration().recv()?;
+    // Get current PM concentration.
+    let get_pm_concentration_result = pm.get_pm_concentration().recv()?;
 
-    println!("PM 1.0: {}{}", get_pm_concentration_result.pm10, " µg/m³");
-    println!("PM 2.5: {}{}", get_pm_concentration_result.pm25, " µg/m³");
-    println!("PM 10.0: {}{}", get_pm_concentration_result.pm100, " µg/m³");
+    println!("PM 1.0: {} µg/m³", get_pm_concentration_result.pm10);
+    println!("PM 2.5: {} µg/m³", get_pm_concentration_result.pm25);
+    println!("PM 10.0: {} µg/m³", get_pm_concentration_result.pm100);
 
     println!("Press enter to exit.");
     let mut _input = String::new();
