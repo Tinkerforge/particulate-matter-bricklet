@@ -14,11 +14,11 @@ fn main() -> Result<(), Box<dyn Error>> {
                                           // Don't use device before ipcon is connected.
 
     // Get current PM concentration.
-    let get_pm_concentration_result = pm.get_pm_concentration().recv()?;
+    let pm_concentration = pm.get_pm_concentration().recv()?;
 
-    println!("PM 1.0: {} µg/m³", get_pm_concentration_result.pm10);
-    println!("PM 2.5: {} µg/m³", get_pm_concentration_result.pm25);
-    println!("PM 10.0: {} µg/m³", get_pm_concentration_result.pm100);
+    println!("PM 1.0: {} µg/m³", pm_concentration.pm10);
+    println!("PM 2.5: {} µg/m³", pm_concentration.pm25);
+    println!("PM 10.0: {} µg/m³", pm_concentration.pm100);
 
     println!("Press enter to exit.");
     let mut _input = String::new();
