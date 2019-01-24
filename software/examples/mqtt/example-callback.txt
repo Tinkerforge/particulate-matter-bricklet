@@ -4,5 +4,6 @@ setup:
 	# Handle incoming PM concentration callbacks
 	subscribe to tinkerforge/callback/particulate_matter_bricklet/XYZ/pm_concentration
 	publish '{"register": true}' to tinkerforge/register/particulate_matter_bricklet/XYZ/pm_concentration # Register pm_concentration callback
+	
 	# Set period for PM concentration callback to 1s (1000ms)
 	publish '{"period": 1000, "value_has_to_change": false}' to tinkerforge/request/particulate_matter_bricklet/XYZ/set_pm_concentration_callback_configuration 
