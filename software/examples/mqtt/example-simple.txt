@@ -3,4 +3,4 @@
 setup:
 	# Get current PM concentration
 	subscribe to tinkerforge/response/particulate_matter_bricklet/XYZ/get_pm_concentration
-	publish '' to tinkerforge/request/particulate_matter_bricklet/XYZ/get_pm_concentration 
+	publish '' to tinkerforge/request/particulate_matter_bricklet/XYZ/get_pm_concentration
