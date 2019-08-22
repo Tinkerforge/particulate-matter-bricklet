@@ -36,7 +36,7 @@ int main(void) {
 	// Register PM concentration callback to function cb_pm_concentration
 	particulate_matter_register_callback(&pm,
 	                                     PARTICULATE_MATTER_CALLBACK_PM_CONCENTRATION,
-	                                     (void *)cb_pm_concentration,
+	                                     (void (*)(void))cb_pm_concentration,
 	                                     NULL);
 
 	// Set period for PM concentration callback to 1s (1000ms)
