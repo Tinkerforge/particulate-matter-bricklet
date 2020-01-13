@@ -22,5 +22,5 @@ if __name__ == "__main__":
     print("PM 2.5: " + str(pm25) + " µg/m³")
     print("PM 10.0: " + str(pm100) + " µg/m³")
 
-    raw_input("Press key to exit\n") # Use input() in Python 3
+    input("Press key to exit\n") # Use raw_input() in Python 2
     ipcon.disconnect()
