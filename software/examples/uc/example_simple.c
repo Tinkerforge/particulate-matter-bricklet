@@ -1,14 +1,9 @@
-
-
 #include "bindings/hal_common.h"
 #include "bindings/bricklet_particulate_matter.h"
 
 #define UID "XYZ" // Change XYZ to the UID of your Particulate Matter Bricklet
 
 void check(int rc, const char* msg);
-
-
-
 
 TF_ParticulateMatter pm;
 

@@ -1,13 +1,9 @@
-
-
 #include "bindings/hal_common.h"
 #include "bindings/bricklet_particulate_matter.h"
 
 #define UID "XYZ" // Change XYZ to the UID of your Particulate Matter Bricklet
 
 void check(int rc, const char* msg);
-
-
 
 // Callback function for PM concentration callback
 void pm_concentration_handler(TF_ParticulateMatter *device, uint16_t pm10, uint16_t pm25,
@@ -19,7 +15,6 @@ void pm_concentration_handler(TF_ParticulateMatter *device, uint16_t pm10, uint1
 	tf_hal_printf("PM 10.0: %u µg/m³\n", pm100);
 	tf_hal_printf("\n");
 }
-
 
 TF_ParticulateMatter pm;
 
