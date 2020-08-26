@@ -22,15 +22,13 @@ void example_setup(TF_HalContext *hal) {
 	// Create device object
 	check(tf_particulate_matter_create(&pm, UID, hal), "create device object");
 
-
 	// Register PM concentration callback to function pm_concentration_handler
 	tf_particulate_matter_register_pm_concentration_callback(&pm,
-	                                                        pm_concentration_handler,
-	                                                        NULL);
+	                                                         pm_concentration_handler,
+	                                                         NULL);
 
 	// Set period for PM concentration callback to 1s (1000ms)
 	tf_particulate_matter_set_pm_concentration_callback_configuration(&pm, 1000, false);
-
 }
 
 void example_loop(TF_HalContext *hal) {
