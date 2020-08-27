@@ -5,9 +5,13 @@
 
 void check(int rc, const char* msg);
 
+void example_setup(TF_HalContext *hal);
+void example_loop(TF_HalContext *hal);
+
+
 // Callback function for PM concentration callback
-void pm_concentration_handler(TF_ParticulateMatter *device, uint16_t pm10, uint16_t pm25,
-                              uint16_t pm100, void *user_data) {
+static void pm_concentration_handler(TF_ParticulateMatter *device, uint16_t pm10,
+                                     uint16_t pm25, uint16_t pm100, void *user_data) {
 	(void)device; (void)user_data; // avoid unused parameter warning
 
 	tf_hal_printf("PM 1.0: %u µg/m³\n", pm10);
@@ -16,7 +20,7 @@ void pm_concentration_handler(TF_ParticulateMatter *device, uint16_t pm10, uint1
 	tf_hal_printf("\n");
 }
 
-TF_ParticulateMatter pm;
+static TF_ParticulateMatter pm;
 
 void example_setup(TF_HalContext *hal) {
 	// Create device object
