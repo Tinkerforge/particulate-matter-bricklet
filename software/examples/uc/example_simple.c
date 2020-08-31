@@ -20,9 +20,9 @@ void example_setup(TF_HalContext *hal) {
 	check(tf_particulate_matter_get_pm_concentration(&pm, &pm10, &pm25,
 	                                                 &pm100), "get PM concentration");
 
-	tf_hal_printf("PM 1.0: %u µg/m³\n", pm10);
-	tf_hal_printf("PM 2.5: %u µg/m³\n", pm25);
-	tf_hal_printf("PM 10.0: %u µg/m³\n", pm100);
+	tf_hal_printf("PM 1.0: %I16u µg/m³\n", pm10);
+	tf_hal_printf("PM 2.5: %I16u µg/m³\n", pm25);
+	tf_hal_printf("PM 10.0: %I16u µg/m³\n", pm100);
 }
 
 void example_loop(TF_HalContext *hal) {

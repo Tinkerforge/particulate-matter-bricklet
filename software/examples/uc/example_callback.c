@@ -14,9 +14,9 @@ static void pm_concentration_handler(TF_ParticulateMatter *device, uint16_t pm10
                                      uint16_t pm25, uint16_t pm100, void *user_data) {
 	(void)device; (void)user_data; // avoid unused parameter warning
 
-	tf_hal_printf("PM 1.0: %u µg/m³\n", pm10);
-	tf_hal_printf("PM 2.5: %u µg/m³\n", pm25);
-	tf_hal_printf("PM 10.0: %u µg/m³\n", pm100);
+	tf_hal_printf("PM 1.0: %I16u µg/m³\n", pm10);
+	tf_hal_printf("PM 2.5: %I16u µg/m³\n", pm25);
+	tf_hal_printf("PM 10.0: %I16u µg/m³\n", pm100);
 	tf_hal_printf("\n");
 }
 
