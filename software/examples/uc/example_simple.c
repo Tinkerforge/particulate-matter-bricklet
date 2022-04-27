@@ -1,23 +1,19 @@
 // This example is not self-contained.
-// It requres usage of the example driver specific to your platform.
+// It requires usage of the example driver specific to your platform.
 // See the HAL documentation.
 
-#include "bindings/hal_common.h"
-#include "bindings/bricklet_particulate_matter.h"
+#include "src/bindings/hal_common.h"
+#include "src/bindings/bricklet_particulate_matter.h"
 
-#define UID "XYZ" // Change XYZ to the UID of your Particulate Matter Bricklet
-
-void check(int rc, const char* msg);
-
+void check(int rc, const char *msg);
 void example_setup(TF_HAL *hal);
 void example_loop(TF_HAL *hal);
-
 
 static TF_ParticulateMatter pm;
 
 void example_setup(TF_HAL *hal) {
 	// Create device object
-	check(tf_particulate_matter_create(&pm, UID, hal), "create device object");
+	check(tf_particulate_matter_create(&pm, NULL, hal), "create device object");
 
 	// Get current PM concentration
 	uint16_t pm10, pm25, pm100;
