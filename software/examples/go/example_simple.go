@@ -21,9 +21,9 @@ func main() {
 	// Get current PM concentration.
 	pm10, pm25, pm100, _ := pm.GetPMConcentration()
 
-	fmt.Printf("PM 1.0:  µg/m³\n", pm10)
-	fmt.Printf("PM 2.5:  µg/m³\n", pm25)
-	fmt.Printf("PM 10.0:  µg/m³\n", pm100)
+	fmt.Printf("PM 1.0: %d µg/m³\n", pm10)
+	fmt.Printf("PM 2.5: %d µg/m³\n", pm25)
+	fmt.Printf("PM 10.0: %d µg/m³\n", pm100)
 
 	fmt.Print("Press enter to exit.")
 	fmt.Scanln()
